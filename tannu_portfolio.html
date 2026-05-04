@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tannu Dhaka – Portfolio</title>
+
+  <!-- QR-Code Bibliothek (kostenlos) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    /* ── Grundeinstellungen ── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, serif;
+      background: #f5f2eb;
+      color: #1a1a18;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── Seitenrahmen ── */
+    .seite {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* ── OBEN: Name + Kontakt + QR-Code ── */
+    .oben {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      border-bottom: 2px solid #1D9E75;
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+
+    .oben-links h1 {
+      font-size: 2.4rem;
+      font-weight: normal;
+      white-space: nowrap; /* Name bleibt in einer Zeile */
+    }
+
+    .oben-links .untertitel {
+      font-family: monospace;
+      font-size: 13px;
+      color: #1D9E75;
+      margin: 6px 0 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .kontakt-liste {
+      list-style: none;
+      font-size: 14px;
+    }
+
+    .kontakt-liste li {
+      margin-bottom: 4px;
+      color: #555;
+    }
+
+    /* Alle Links sehen gleich aus */
+    a {
+      color: #0F6E56;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── QR-Code Box ── */
+    .qr-box {
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .qr-box p {
+      font-family: monospace;
+      font-size: 10px;
+      color: #888;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ── Abschnitts-Überschriften ── */
+    h2 {
+      font-family: monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #888;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 6px;
+    }
+
+    section {
+      margin-bottom: 36px;
+    }
+
+    /* ── Profiltext ── */
+    .profil p {
+      font-size: 15px;
+      color: #333;
+      max-width: 600px;
+    }
+
+    /* ── Projektkarten ── */
+    .karte {
+      background: white;
+      border: 1px solid #ddd;
+      border-left: 4px solid #1D9E75;
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+
+    .karte-kopf {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .karte-titel {
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .karte-datum {
+      font-family: monospace;
+      font-size: 11px;
+      color: #888;
+      white-space: nowrap;
+      padding-top: 3px;
+    }
+
+    .karte-beschreibung {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    /* Link-Buttons in den Karten */
+    .karte-links {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .karte-links a {
+      font-family: monospace;
+      font-size: 12px;
+      border: 1px solid #1D9E75;
+      border-radius: 4px;
+      padding: 3px 10px;
+      color: #0F6E56;
+      background: #f0faf6;
+    }
+
+    .karte-links a:hover {
+      background: #d6f5ea;
+      text-decoration: none;
+    }
+
+    .karte ul {
+      padding-left: 18px;
+      font-size: 13.5px;
+      color: #444;
+    }
+
+    .karte ul li {
+      margin-bottom: 4px;
+    }
+
+    /* Technologie-Tags */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      font-family: monospace;
+      font-size: 11px;
+      background: #e1f5ee;
+      color: #0F6E56;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* ── Erfahrungs- und Bildungszeilen ── */
+    .zeile {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .zeile:last-child {
+      border-bottom: none;
+    }
+
+    .zeile-links strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .zeile-links span {
+      font-size: 13px;
+      color: #888;
+    }
+
+    .zeile-datum {
+      font-family: monospace;
+      font-size: 12px;
+      color: #888;
+      white-space: nowrap;
+    }
+
+    .zeile-punkte {
+      margin-top: 8px;
+      padding-left: 18px;
+      font-size: 13.5px;
+      color: #555;
+    }
+
+    /* ── Kenntnisse-Raster ── */
+    .kenntnisse-raster {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .kenntnisse-box {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+
+    .kenntnisse-box strong {
+      display: block;
+      font-family: monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #1D9E75;
+      margin-bottom: 4px;
+    }
+
+    .kenntnisse-box span {
+      font-size: 13px;
+      color: #555;
+    }
+
+    /* ── Sprachen ── */
+    .sprachen-zeile {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .sprache strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .sprache span {
+      font-size: 13px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+<div class="seite">
+
+  <!-- ══════════════════════ OBEN: Name + QR ══════════════════════ -->
+  <div class="oben">
+    <div class="oben-links">
+      <h1>Tannu Dhaka</h1>
+      <p class="untertitel">KI-Studentin · Machine Learning &amp; NLP</p>
+
+      <ul class="kontakt-liste">
+        <li>📍 Rosenheim, Deutschland</li>
+        <li>📞 +49 176 74572349</li>
+        <li>✉️ <a href="mailto:tannudhaka55@gmail.com">tannudhaka55@gmail.com</a></li>
+        <li>💼 <a href="https://linkedin.com/in/tannu-dhaka" target="_blank">linkedin.com/in/tannu-dhaka</a></li>
+        <li>🐙 <a href="https://github.com/studtannta9166" target="_blank">github.com/studtannta9166</a></li>
+      </ul>
+    </div>
+
+    <!-- QR-Code erscheint hier -->
+    <div class="qr-box">
+      <div id="qrcode"></div>
+      <p>QR scannen</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ PROFIL ══════════════════════ -->
+  <section class="profil">
+    <h2>Profil</h2>
+    <p>
+      Ich studiere Angewandte Künstliche Intelligenz an der TH Rosenheim.
+      Mein Schwerpunkt liegt auf Machine-Learning-Systemen und NLP.
+      Ich habe Erfahrung beim Aufbau von ML-Projekten – von der Datenvorbereitung
+      über das Modelltraining bis zur Bereitstellung als Webanwendung.
+      Ich interessiere mich besonders für datenbasierte Lösungen für echte Probleme.
+    </p>
+  </section>
+
+  <!-- ══════════════════════ PROJEKTE ══════════════════════ -->
+  <section>
+    <h2>Projekte</h2>
+
+    <!-- Projekt 1 -->
+    <div class="karte">
+      <div class="karte-kopf">
+        <div class="karte-titel">CV Reality Checker – KI-Tool zur Lebenslaufanalyse</div>
+        <div class="karte-datum">04/2026 – heute</div>
+      </div>
+      <p class="karte-beschreibung">
+        Eine Webanwendung, die Lebensläufe automatisch analysiert, fehlende Fähigkeiten erkennt
+        und konkrete Weiterbildungsempfehlungen gibt. Die App ist live und kann direkt getestet werden.
+      </p>
+      <!-- Diese Buttons sind echte klickbare Links -->
+      <div class="karte-links">
+        <a href="https://web-production-e23ef.up.railway.app" target="_blank">🌐 Live Demo</a>
+        <a href="https://github.com/studtannta9166/cv-reality-checker" target="_blank">📂 GitHub</a>
+      </div>
+      <ul>
+        <li>NLP-Pipeline zur automatischen Extraktion von Fähigkeiten aus PDF- und DOCX-Dateien (mit spaCy)</li>
+        <li>ML-Klassifikationsmodell mit SMOTE zur Behandlung von Klassenungleichgewicht</li>
+        <li>Flask-Backend auf Railway bereitgestellt</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">scikit-learn</span>
+        <span class="tag">XGBoost</span>
+        <span class="tag">spaCy</span>
+        <span class="tag">pandas</span>
+        <span class="tag">Flask</span>
+        <span class="tag">Railway</span>
+      </div>
+    </div>
+
+    <!-- Projekt 2 -->
+    <div class="karte">
+      <div class="karte-kopf">
+        <div class="karte-titel">Predictive Maintenance System für Industrieanlagen</div>
+        <div class="karte-datum">04/2026 – heute</div>
+      </div>
+      <p class="karte-beschreibung">
+        Ein Klassifikationsmodell, das auf Basis von Sensordaten (Temperatur, Drehzahl, Drehmoment)
+        Maschinenausfälle frühzeitig vorhersagt.
+      </p>
+      <div class="karte-links">
+        <a href="https://github.com/moneysharma1/Predictive_maintenance" target="_blank">📂 GitHub</a>
+      </div>
+      <ul>
+        <li>Datenvorbereitung, explorative Datenanalyse und Feature Engineering</li>
+        <li>Vergleich von Logistischer Regression und Entscheidungsbaum – Teamarbeit zu zweit</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">pandas</span>
+        <span class="tag">NumPy</span>
+        <span class="tag">scikit-learn</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ BERUFSERFAHRUNG ══════════════════════ -->
+  <section>
+    <h2>Berufserfahrung</h2>
+    <div class="zeile">
+      <div class="zeile-links">
+        <strong>Verkaufsassistentin / Kassiererin</strong>
+        <span>Woolworth GmbH, Rosenheim</span>
+        <ul class="zeile-punkte">
+          <li>Zuverlässige Teamarbeit in einem schnellen, hochfrequentierten Umfeld</li>
+          <li>Kundenberatung und Kassenabwicklung unter Zeitdruck</li>
+        </ul>
+      </div>
+      <div class="zeile-datum">02/2025 – heute</div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ AUSBILDUNG ══════════════════════ -->
+  <section>
+    <h2>Ausbildung</h2>
+    <div class="zeile">
+      <div class="zeile-links">
+        <strong>B.Sc. Angewandte Künstliche Intelligenz</strong>
+        <span>TH Rosenheim</span>
+      </div>
+      <div class="zeile-datum">10/2024 – heute</div>
+    </div>
+    <div class="zeile">
+      <div class="zeile-links">
+        <strong>Höhere Sekundarschule (12. Klasse)</strong>
+        <span>Ved Model International School, Indien</span>
+      </div>
+      <div class="zeile-datum">2020 – 2021</div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ KENNTNISSE ══════════════════════ -->
+  <section>
+    <h2>Kenntnisse &amp; Technologien</h2>
+    <div class="kenntnisse-raster">
+      <div class="kenntnisse-box">
+        <strong>Machine Learning</strong>
+        <span>Klassifikation, Regression, NLP, Modellevaluation, SMOTE</span>
+      </div>
+      <div class="kenntnisse-box">
+        <strong>Frameworks</strong>
+        <span>scikit-learn, XGBoost, PyTorch, spaCy, Hugging Face</span>
+      </div>
+      <div class="kenntnisse-box">
+        <strong>Daten &amp; Analyse</strong>
+        <span>pandas, NumPy, EDA, Feature Engineering, Datenvisualisierung</span>
+      </div>
+      <div class="kenntnisse-box">
+        <strong>Deployment &amp; Tools</strong>
+        <span>Flask, Streamlit, Git, Railway, Jupyter Notebook, VS Code</span>
+      </div>
+      <div class="kenntnisse-box">
+        <strong>Programmierung</strong>
+        <span>Python (fortgeschritten), SQL, Java, HTML, CSS, JavaScript</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ SPRACHEN ══════════════════════ -->
+  <section>
+    <h2>Sprachen</h2>
+    <div class="sprachen-zeile">
+      <div class="sprache">
+        <strong>Deutsch</strong>
+        <span>B1–B2 · Lesen B2 · Schreiben B2 · Sprechen B1</span>
+      </div>
+      <div class="sprache">
+        <strong>Englisch</strong>
+        <span>C1 · Fließend in allen Bereichen</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ EHRENAMT ══════════════════════ -->
+  <section>
+    <h2>Ehrenamtliches Engagement</h2>
+    <div class="zeile">
+      <div class="zeile-links">
+        <strong>Freiwillige – Studentische Veranstaltungen</strong>
+        <span>TH Rosenheim</span>
+        <ul class="zeile-punkte">
+          <li>Planung und Koordination von Hochschulveranstaltungen im interkulturellen Team</li>
+          <li>Logistische Unterstützung und Betreuung von Teilnehmern vor Ort</li>
+        </ul>
+      </div>
+      <div class="zeile-datum">11/2025 – heute</div>
+    </div>
+  </section>
+
+</div><!-- Ende .seite -->
+
+
+<!-- ══════════════════════ QR-CODE SKRIPT ══════════════════════ -->
+<script>
+  /*
+    Hier wird der QR-Code erstellt.
+    Er zeigt gerade auf dein GitHub-Profil.
+
+    Wenn deine Website online ist (z.B. auf GitHub Pages),
+    ändere die URL unten auf deine echte Website-Adresse.
+    Dann öffnet der QR-Code direkt dein Portfolio!
+  */
+
+  var meineWebsite = "https://github.com/studtannta9166";
+  // ☝️ Nach dem Hochladen ändern, z.B.:
+  // var meineWebsite = "https://studtannta9166.github.io";
+
+  new QRCode(document.getElementById("qrcode"), {
+    text: meineWebsite,
+    width: 100,
+    height: 100,
+    colorDark: "#1a1a18",
+    colorLight: "#f5f2eb",
+    correctLevel: QRCode.CorrectLevel.M
+  });
+</script>
+
+</body>
+</html>
